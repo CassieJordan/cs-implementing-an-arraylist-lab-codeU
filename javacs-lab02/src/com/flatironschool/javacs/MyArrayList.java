@@ -21,7 +21,8 @@ public class MyArrayList<E> implements List<E> {
 	/**
 	 * 
 	 */
-	public MyArrayList() {
+	public MyArrayList() 
+	{
 		// You can't instantiate an array of T[], but you can instantiate an
 		// array of Object and then typecast it.  Details at
 		// http://www.ibm.com/developerworks/java/library/j-jtp01255/index.html
@@ -32,7 +33,8 @@ public class MyArrayList<E> implements List<E> {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		// run a few simple tests
 		MyArrayList<Integer> mal = new MyArrayList<Integer>();
 		mal.add(1);
@@ -45,8 +47,10 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public boolean add(E element) {
-		if (size >= array.length) {
+	public boolean add(E element) 
+	{
+		if (size >= array.length) 
+		{
 			// make a bigger array and copy over the elements
 			E[] bigger = (E[]) new Object[array.length * 2];
 			System.arraycopy(array, 0, bigger, 0, array.length);
@@ -58,43 +62,62 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public void add(int index, E element) {
-		if (index < 0 || index > size) {
+	public void add(int index, E element) 
+	{
+		if (index < 0 || index > size) 
+		{
 			throw new IndexOutOfBoundsException();
 		}
 		// TODO: fill in the rest of this method
+		//makes room for new element
+		add(element);
+		//shifts everything in the array to make room for the new element
+		for (int x = size-1; x > index; x--)
+		{
+		    array[x] = array[x-1];
+		}
+		//inserts specified element at correct location
+		 array[index] = element;
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends E> collection) {
+	public boolean addAll(Collection<? extends E> collection) 
+	{
 		boolean flag = true;
-		for (E element: collection) {
+		for (E element: collection) 
+		{
 			flag &= add(element);
 		}
 		return flag;
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends E> collection) {
+	public boolean addAll(int index, Collection<? extends E> collection) 
+	{
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void clear() {
+	public void clear() 
+	{
 		// note: this version does not actually null out the references
 		// in the array, so it might delay garbage collection.
 		size = 0;
 	}
 
 	@Override
-	public boolean contains(Object obj) {
+	public boolean contains(Object obj) 
+	{
 		return indexOf(obj) != -1;
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> collection) {
-		for (Object element: collection) {
-			if (!contains(element)) {
+	public boolean containsAll(Collection<?> collection)
+	{
+		for (Object element: collection) 
+		{
+			if (!contains(element)) 
+			{
 				return false;
 			}
 		}
@@ -102,17 +125,27 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public E get(int index) {
-		if (index < 0 || index >= size) {
+	public E get(int index) 
+	{
+		if (index < 0 || index >= size) 
+		{
 			throw new IndexOutOfBoundsException();
 		}
 		return array[index];
 	}
 
 	@Override
-	public int indexOf(Object target) {
+	public int indexOf(Object target) 
+	{
 		// TODO: fill in this method
-		return 0;
+	    for(int x = 0; x<size; x++)
+	    {
+	        if (equals(array[x], target))
+	        {
+	            return x;
+	        }
+	    }
+		return -1;
 	}
 
 	/** Checks whether an element of the array is the target.
@@ -122,21 +155,26 @@ public class MyArrayList<E> implements List<E> {
 	 * @param target
 	 * @param object
 	 */
-	private boolean equals(Object target, Object element) {
-		if (target == null) {
+	private boolean equals(Object target, Object element) 
+	{
+		if (target == null) 
+		{
 			return element == null;
-		} else {
+		} else 
+		{
 			return target.equals(element);
 		}
 	}
 
 	@Override
-	public boolean isEmpty() {
+	public boolean isEmpty() 
+	{
 		return size == 0;
 	}
 
 	@Override
-	public Iterator<E> iterator() {
+	public Iterator<E> iterator() 
+	{
 		// make a copy of the array
 		E[] copy = Arrays.copyOf(array, size);
 		// make a list and return an iterator
@@ -144,10 +182,13 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public int lastIndexOf(Object target) {
+	public int lastIndexOf(Object target) 
+	{
 		// see notes on indexOf
-		for (int i = size-1; i>=0; i--) {
-			if (equals(target, array[i])) {
+		for (int i = size-1; i>=0; i--) 
+		{
+			if (equals(target, array[i])) 
+			{
 				return i;
 			}
 		}
@@ -155,7 +196,8 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public ListIterator<E> listIterator() {
+	public ListIterator<E> listIterator() 
+	{
 		// make a copy of the array
 		E[] copy = Arrays.copyOf(array, size);
 		// make a list and return an iterator
@@ -163,7 +205,8 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public ListIterator<E> listIterator(int index) {
+	public ListIterator<E> listIterator(int index) 
+	{
 		// make a copy of the array
 		E[] copy = Arrays.copyOf(array, size);
 		// make a list and return an iterator
@@ -171,7 +214,8 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public boolean remove(Object obj) {
+	public boolean remove(Object obj) 
+	{
 		int index = indexOf(obj);
 		if (index == -1) {
 			return false;
@@ -181,39 +225,55 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public E remove(int index) {
+	public E remove(int index) 
+	{
 		// TODO: fill in this method.
-		return null;
+	    E element = get(index);
+	    for (int x = index; x<size-1; x++)
+	    {
+	        array[x] = array[x+1];
+	    }
+	    size--;
+		return element;
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> collection) {
+	public boolean removeAll(Collection<?> collection) 
+	{
 		boolean flag = true;
-		for (Object obj: collection) {
+		for (Object obj: collection) 
+		{
 			flag &= remove(obj);
 		}
 		return flag;
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> collection) {
+	public boolean retainAll(Collection<?> collection)
+	{
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public E set(int index, E element) {
+	public E set(int index, E element) 
+	{
 		// TODO: fill in this method.
-		return null;
+	    E oldElement = get(index);
+	    array[index] = element;
+		return oldElement;
 	}
 
 	@Override
-	public int size() {
+	public int size() 
+	{
 		return size;
 	}
 
 	@Override
-	public List<E> subList(int fromIndex, int toIndex) {
-		if (fromIndex < 0 || toIndex >= size || fromIndex > toIndex) {
+	public List<E> subList(int fromIndex, int toIndex) 
+	{
+		if (fromIndex < 0 || toIndex >= size || fromIndex > toIndex) 
+		{
 			throw new IndexOutOfBoundsException();
 		}
 		E[] copy = Arrays.copyOfRange(array, fromIndex, toIndex);
@@ -221,12 +281,14 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public Object[] toArray() {
+	public Object[] toArray() 
+	{
 		return Arrays.copyOf(array, size);
 	}
 
 	@Override
-	public <T> T[] toArray(T[] array) {
+	public <T> T[] toArray(T[] array) 
+	{
 		throw new UnsupportedOperationException();		
 	}
 }
